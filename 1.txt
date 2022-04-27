@@ -1,4 +1,8 @@
 Da 
+<<<<<<< HEAD
 Ya kotyk
 I pesyk
+=======
+Ya kotyk fu
+>>>>>>> 24b3b4c1a47a06cde1e54cb49aaa4eaf2a00ede1
 Ne zaslyzuv) <3
