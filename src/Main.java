@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Main {
-    //test
+    Map<String, ArrayList<Goods>> goodsGroupMap;
+    ArrayList <Goods> goodsArrayList;
+    Map <String, String> groupMap;
 }
