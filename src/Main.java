@@ -88,4 +88,23 @@ goods.setDescription(DataInput.getString("Description"));
 goods.setProducer(DataInput.getString("Producer"));
 goods.setName(DataInput.getString("Name"));
     }
+
+    private static void addGroup(Group group){
+        groupArrayList.add(group);
+    }
+
+    private static Group makeNewGroup() throws IOException {
+        String name=DataInput.getString("Name:");
+        String description=DataInput.getString("Description:");
+        return new Group(name,description,new ArrayList<Goods>());
+    }
+
+    private static void removeGroup(Group group){
+        groupArrayList.remove(group);
+    }
+
+    private static void editGroup(Group group) throws IOException {
+        group.setName(DataInput.getString("Name"));
+        group.setDescription(DataInput.getString("Description"));
+    }
 }
