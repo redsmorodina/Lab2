@@ -1,11 +1,15 @@
-public class Goods {
-    String name;
-    String description;
-    String producer;
-    int quantity;
-    int price;
+import java.util.Objects;
 
-    public Goods(String name, String description, String producer, int quantity, int price) {
+public class Goods {
+    private Group group;
+    private String name;
+    private String description;
+    private String producer;
+    private int quantity;
+    private double price;
+
+    public Goods(Group group, String name, String description, String producer, int quantity, double price) {
+        this.group = group;
         this.name = name;
         this.description = description;
         this.producer = producer;
@@ -13,15 +17,25 @@ public class Goods {
         this.price = price;
     }
 
+
     @Override
     public String toString() {
         return "Goods{" +
-                "name='" + name + '\'' +
+                "group='" + group.getName() + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", producer='" + producer + '\'' +
                 ", quantity=" + quantity +
                 ", price=" + price +
                 '}';
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public String getName() {
@@ -56,11 +70,11 @@ public class Goods {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
