@@ -156,4 +156,28 @@ public class Main {
         }
         return answ;
     }
+
+    private static ArrayList<Goods> findGoodsByName(String name){
+        ArrayList<Goods> result = new ArrayList<>();
+        for (Goods good:goodsArrayList) {
+            if(good.getName().contains(name)) result.add(good);
+        }
+        return result;
+    }
+
+    private static ArrayList<Goods> findGoodsByProducer(String producer){
+        ArrayList<Goods> result = new ArrayList<>();
+        for (Goods good:goodsArrayList) {
+            if(good.getProducer().contains(producer)) result.add(good);
+        }
+        return result;
+    }
+
+    private static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
+        ArrayList<Goods> result = new ArrayList<>();
+        for (Goods good:goodsArrayList) {
+            if(good.getName().contains(name)&&good.getProducer().contains(producer)) result.add(good);
+        }
+        return result;
+    }
 }
