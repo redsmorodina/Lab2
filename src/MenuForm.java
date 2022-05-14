@@ -351,11 +351,24 @@ initGoodsAdd(frame);
            groupNameArray[i]=Main.groupArrayList.get(i).getName();
         }
 
+        //String groupGoods;
+
         JComboBox group = new JComboBox(groupNameArray);
+        goodsAddPanel.add(group);
+        /*
+        group.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                groupGoods = group.getName();
+            }
+        });
 
-goodsAddPanel.add(group);
+
+        String
+        System.out.println(groupGoods);
 
 
+         */
         goodsAddPanel.add(new JLabel("Name:"));
         JTextField nameText = new JTextField();
         nameText.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -388,7 +401,25 @@ goodsAddPanel.add(group);
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+if(nameText.getText().equals("") || descrText.getText().equals("")|| prodText.getText().equals("")){
+    new Error("Please, fill all fields");
+}
+else{
+    String groupGoods = (String) group.getSelectedItem();
+    Group a = null;
+    for(int i=0; i<Main.groupArrayList.size(); i++){
+        if(groupGoods.equals(Main.groupArrayList.get(i).getName())){
+            a = Main.groupArrayList.get(i);
+            break;
+        }
+    }
+    int q = (int) quantity.getValue();
+    double p = (double) price.getValue();
+    Main.addGoods(new Goods(a, nameText.getText(), descrText.getText(), prodText.getText(), q, p));
+    goodsAddPanel.setVisible(false);
+    remove(goodsAddPanel);
+    initGoods(frame);
+}
             }
         });
         goodsAddPanel.add(addButton);

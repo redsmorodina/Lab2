@@ -11,15 +11,14 @@ public class Main {
         groupArrayList = new ArrayList<>();
         groupArrayList.add(new Group("ghjk", "hjkl;", new ArrayList<>()));
         groupArrayList.add(new Group("fghjk", "uiop[", new ArrayList<>()));
-        groupArrayList.get(0).getGoods().add(new Goods(groupArrayList.get(0), "gfds", "fdsa", "fghjkl", 2, 3));
-        groupArrayList.get(0).getGoods().add(new Goods(groupArrayList.get(0), "gfdsdsdffdd", "fdsafds", "fghjklfds", 3, 3));
+
 MenuForm a = new MenuForm();
         a.setBounds(200,100,500,500);
         a.setVisible(true);
     }
 
 
-    private static void addGoods(Goods goods) {
+    public static void addGoods(Goods goods) {
         goodsArrayList.add(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().add(goods);
 //STRING VALUE OF
