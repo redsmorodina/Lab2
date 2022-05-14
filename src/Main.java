@@ -9,7 +9,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         goodsArrayList = new ArrayList<>();
         groupArrayList = new ArrayList<>();
-
+        groupArrayList.add(new Group("ghjk", "hjkl;", new ArrayList<>()));
+        groupArrayList.add(new Group("fghjk", "uiop[", new ArrayList<>()));
+        groupArrayList.get(0).getGoods().add(new Goods(groupArrayList.get(0), "gfds", "fdsa", "fghjkl", 2, 3));
+        groupArrayList.get(0).getGoods().add(new Goods(groupArrayList.get(0), "gfdsdsdffdd", "fdsafds", "fghjklfds", 3, 3));
+MenuForm a = new MenuForm();
+        a.setBounds(200,100,500,500);
+        a.setVisible(true);
     }
 
 
@@ -105,7 +111,7 @@ public class Main {
         group.setDescription(DataInput.getString("Description"));
     }
 
-    private static ArrayList<String> statisticInfoFromAllGroups() {
+    public static ArrayList<String> statisticInfoFromAllGroups() {
         ArrayList<String> answ = new ArrayList<>();
         for (int i = 0; i < groupArrayList.size(); i++) {
             answ.addAll(statisticInfoFromGroup(groupArrayList.get(i)));
@@ -114,7 +120,7 @@ public class Main {
         return answ;
     }
 
-    private static ArrayList<String> statisticInfoFromGroup(Group a) {
+    public static ArrayList<String> statisticInfoFromGroup(Group a) {
         ArrayList<String> answ = new ArrayList<>();
         answ.add("\n" + a.getName());
         if (groupArrayList.get(groupArrayList.indexOf(a)).getGoods().size() == 0) {
@@ -128,13 +134,13 @@ public class Main {
     }
 
 
-    private static ArrayList<String> statisticInfoGeneralPrice() {
-        ArrayList<String> answ = new ArrayList();
-        answ.add("Загальна вартість товару на складі " + statisticInfoGeneralPrice());
-        return answ;
+    public static String statisticInfoGeneralPrice() {
+
+        return "Загальна вартість товару на складі " + getPriceAllProduct();
+
     }
 
-    private static ArrayList<String> statisticInfoGroupPrice(Group a) {
+    public static ArrayList<String> statisticInfoGroupPrice(Group a) {
         ArrayList<String> answ = new ArrayList();
         answ.add("Вартість товару на складі у групі " + a.getName() + countPriceGroup(a));
         return answ;
