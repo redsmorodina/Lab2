@@ -21,7 +21,7 @@ public class Group {
                 '}';
     }
 
-    public ArrayList getGoods() {return goods;}
+    public ArrayList<Goods> getGoods() {return goods;}
     public void setGoods(ArrayList goods) {this.goods = goods;}
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}

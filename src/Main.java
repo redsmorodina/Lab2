@@ -1,5 +1,11 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -98,6 +104,9 @@ MenuForm a = new MenuForm();
 
     private static Group makeNewGroup() throws IOException {
         String name = DataInput.getString("Name:");
+        while (!checkTheNameOnUnique(0, name)) {
+            name = DataInput.getString("Name:");
+        }
         String description = DataInput.getString("Description:");
         return new Group(name, description, new ArrayList<Goods>());
     }
@@ -185,5 +194,38 @@ MenuForm a = new MenuForm();
             if(good.getName().contains(name)&&good.getProducer().contains(producer)) result.add(good);
         }
         return result;
+    }
+
+    private static void exportToFiles() throws IOException {
+        File groupObj = new File("D:\\all groups.txt");
+        FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
+        for (Group group: groupArrayList) {
+            writerGroup.write(group.getName()+"\n");
+            File goodObj = new File("D:\\"+group.getName()+".txt");
+            FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
+            for (Goods good: group.getGoods()) {
+                writerGoods.write(good.getName()+"\n");
+            }
+            writerGoods.close();
+        }
+        writerGroup.close();
+    }
+
+    /**
+     * to make the interface of arrive or sell goods
+     * @param num number to add (>0 if arrive, <0 if sell)
+     * @param good what good should we edit
+     */
+    private static void addGoodsQuantity(int num, Goods good){
+        int countedQuantity=num+ good.getQuantity();
+        if(countedQuantity<0){
+            new Error("You can`t sell more than you have.");
+        }else if(num!=0){
+            if(num>0) new Message("On the warehouse arrived "+num+" pcs of "+good.getName());
+            else new Message("You sold "+num+" pcs of "+good.getName());
+            good.setQuantity(countedQuantity);
+        }else{
+            new Error("Number can`t be 0.");
+        }
     }
 }
