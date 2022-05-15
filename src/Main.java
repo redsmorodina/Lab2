@@ -15,8 +15,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         goodsArrayList = new ArrayList<>();
         groupArrayList = new ArrayList<>();
-        groupArrayList.add(new Group("ghjk", "hjkl;", new ArrayList<>()));
-        groupArrayList.add(new Group("fghjk", "uiop[", new ArrayList<>()));
+        Group dairy=new Group("dairy", "dairy products;", new ArrayList<>());
+        groupArrayList.add(dairy);
+        groupArrayList.add(new Group("bread", "bread products[", new ArrayList<>()));
+        addGoods(new Goods(dairy,"milk","milk good","milk factory",30,15));
+        addGoods(new Goods(dairy,"ice cream","ice cream good","milk factory",10,17));
+
+        addGoods(new Goods(dairy,"m","milk good","milk factory",30,15));
+        addGoods(new Goods(dairy,"mn","milk good","milk factory",30,15));
+        addGoods(new Goods(dairy,"mj","milk good","milk factory",30,15));
+        addGoods(new Goods(dairy,"mmkilk","milk good","milk factory",30,15));
+        addGoods(new Goods(dairy,"ml","milk good","milk factory",30,15));
 
 MenuForm a = new MenuForm();
         a.setBounds(200,100,500,500);
@@ -171,7 +180,7 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
-    private static ArrayList<Goods> findGoodsByName(String name){
+    static ArrayList<Goods> findGoodsByName(String name){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getName().contains(name)) result.add(good);
@@ -179,7 +188,7 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    private static ArrayList<Goods> findGoodsByProducer(String producer){
+    static ArrayList<Goods> findGoodsByProducer(String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getProducer().contains(producer)) result.add(good);
@@ -187,7 +196,7 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    private static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
+    static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getName().contains(name)&&good.getProducer().contains(producer)) result.add(good);
@@ -195,19 +204,23 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    private static void exportToFiles() throws IOException {
-        File groupObj = new File("D:\\all groups.txt");
-        FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
-        for (Group group: groupArrayList) {
-            writerGroup.write(group.getName()+"\n");
-            File goodObj = new File("D:\\"+group.getName()+".txt");
-            FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
-            for (Goods good: group.getGoods()) {
-                writerGoods.write(good.getName()+"\n");
+    static void exportToFiles() {
+        try {
+            File groupObj = new File("D:\\all groups.txt");
+            FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
+            for (Group group : groupArrayList) {
+                writerGroup.write(group.getName() + "\n");
+                File goodObj = new File("D:\\" + group.getName() + ".txt");
+                FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
+                for (Goods good : group.getGoods()) {
+                    writerGoods.write(good.getName() + "\n");
+                }
+                writerGoods.close();
             }
-            writerGoods.close();
+            writerGroup.close();
+        }catch (IOException e){
+            new Error("Something went wrong with the file.");
         }
-        writerGroup.close();
     }
 
     /**
@@ -215,13 +228,13 @@ MenuForm a = new MenuForm();
      * @param num number to add (>0 if arrive, <0 if sell)
      * @param good what good should we edit
      */
-    private static void addGoodsQuantity(int num, Goods good){
+    public static void addGoodsQuantity(int num, Goods good){
         int countedQuantity=num+ good.getQuantity();
         if(countedQuantity<0){
             new Error("You can`t sell more than you have.");
         }else if(num!=0){
             if(num>0) new Message("On the warehouse arrived "+num+" pcs of "+good.getName());
-            else new Message("You sold "+num+" pcs of "+good.getName());
+            else new Message("You sold "+(-num)+" pcs of "+good.getName());
             good.setQuantity(countedQuantity);
         }else{
             new Error("Number can`t be 0.");

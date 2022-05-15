@@ -16,9 +16,11 @@ public class MenuForm extends JFrame{
     private JButton fileButton;
     private JPanel MenuPanel;
 
+    private String text;
+    private ArrayList<Goods> found;
 
     public MenuForm() {
-        super("Storage programm");
+        super("Storage program");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 900);
         init(this);
@@ -61,7 +63,9 @@ public class MenuForm extends JFrame{
         supplyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                mainPanel.setVisible(false);
+                remove(mainPanel);
+                initSupply(frame);
             }
         });
         mainPanel.add(supplyButton);
@@ -71,7 +75,9 @@ public class MenuForm extends JFrame{
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                mainPanel.setVisible(false);
+                remove(mainPanel);
+                initFind(frame);
             }
         });
         mainPanel.add(findButton);
@@ -93,10 +99,235 @@ public class MenuForm extends JFrame{
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Main.exportToFiles();
+                new Message("Information was exported on a disk D.");
             }
         });
         mainPanel.add(fileButton);
+    }
+
+    private void initSupply(Frame frame) {
+        frame.setSize(1000,800);
+        JPanel supplyPanel = new JPanel(new GridLayout(8, 2));
+        add(supplyPanel);
+        supplyPanel.add(new JLabel("find goods:."),SwingConstants.CENTER);
+        supplyPanel.add(new JLabel(""), SwingConstants.CENTER);
+
+        supplyPanel.add(new JLabel("Name:"));
+        JTextField nameText = new JTextField();
+        nameText.setFont(new Font("Arial", Font.PLAIN, 25));
+        supplyPanel.add(nameText);
+
+        supplyPanel.add(new JLabel("Producer:"));
+        JTextField producerText = new JTextField();
+        producerText.setFont(new Font("Arial", Font.PLAIN, 25));
+        supplyPanel.add(producerText);
+
+        JTextArea label = new JTextArea();
+        label.setLineWrap(true);
+        label.setWrapStyleWord(true);
+        label.setEditable(false);
+        label.setCursor(null);
+        label.setOpaque(false);
+        label.setFocusable(false);
+        label.setFont(new Font("Arial", Font.PLAIN, 18));
+        label.setBounds(20,0,400,100);
+        JScrollPane jScrollPane = new JScrollPane(label);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        supplyPanel.add(jScrollPane);
+
+        JButton search = new JButton("Search");
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameText.getText();
+                String producer = producerText.getText();
+                if (name.equals("") && producer.equals("")) {
+                    new Error("You have written nothing");
+                } else {
+                    if (name.equals("")) {
+                        found = Main.findGoodsByProducer(producer);
+                    } else if (producer.equals("")) {
+                        found = Main.findGoodsByName(name);
+                    } else {
+                        found = Main.findGoodsByNameAndProducer(name, producer);
+                    }
+                    text="";
+                    if(found.size()==0)  text="We didn`t find any group.";
+                    else{
+                        for(int i=0;i<found.size();i++){
+                            text+=i+" - "+found.get(i)+"\n";
+                        }
+                    }
+                    label.setText(text);
+                }
+            }
+        });
+        supplyPanel.add(search);
+
+        supplyPanel.add(new JLabel("Number of :"));
+        JTextField numberText = new JTextField();
+        numberText.setFont(new Font("Arial", Font.PLAIN, 25));
+        supplyPanel.add(numberText);
+
+        supplyPanel.add(new JLabel("How many:"));
+        JTextField quantityText = new JTextField();
+        quantityText.setFont(new Font("Arial", Font.PLAIN, 25));
+        supplyPanel.add(quantityText);
+
+        JButton arrived = new JButton("Arrived");
+        arrived.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(numberText.getText());
+                    int quantity = Integer.parseInt(quantityText.getText());
+                    if (label.getText().equals("") ||num<0||num>=label.getLineCount()||quantity<0){
+                        new Error("You have entered something wrong.");
+                    }else{
+                        Main.addGoodsQuantity(quantity,found.get(num));
+                    }
+                }catch(NumberFormatException ex){
+                    new Error("You have entered something wrong.");
+                }
+            }
+        });
+        supplyPanel.add(arrived);
+
+        JButton sold = new JButton("Sold");
+        sold.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(numberText.getText());
+                    int quantity = Integer.parseInt(quantityText.getText());
+                    if (label.getText().equals("") ||num<0||num>=label.getLineCount()||quantity<0){
+                        new Error("You have entered something wrong.");
+                    }else{
+                        Main.addGoodsQuantity(-quantity,found.get(num));
+                    }
+                }catch(NumberFormatException ex){
+                    new Error("You have entered something wrong.");
+                }
+            }
+        });
+        supplyPanel.add(sold);
+
+        JButton back = new JButton("Back");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                supplyPanel.setVisible(false);
+                remove(supplyPanel);
+                init(frame);
+            }
+        });
+        supplyPanel.add(back);
+    }
+
+    private void initFind(Frame frame) {
+        JPanel findPanel = new JPanel(new GridLayout(5, 2));
+        add(findPanel);
+        findPanel.add(new JLabel("Please enter the information about goods."),SwingConstants.CENTER);
+        findPanel.add(new JLabel(""), SwingConstants.CENTER);
+
+        findPanel.add(new JLabel("Name:"));
+        JTextField nameText = new JTextField();
+        nameText.setFont(new Font("Arial", Font.PLAIN, 25));
+        findPanel.add(nameText);
+
+        findPanel.add(new JLabel("Producer:"));
+        JTextField producerText = new JTextField();
+        producerText.setFont(new Font("Arial", Font.PLAIN, 25));
+        findPanel.add(producerText);
+
+        JButton search = new JButton("Search");
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameText.getText();
+                String producer = producerText.getText();
+                ArrayList<Goods> found;
+                if (name.equals("") && producer.equals("")) {
+                    new Error("You have written nothing");
+                } else {
+                    if (name.equals("")) {
+                        found = Main.findGoodsByProducer(producer);
+                    } else if (producer.equals("")) {
+                        found = Main.findGoodsByName(name);
+                    } else {
+                        found = Main.findGoodsByNameAndProducer(name, producer);
+                    }
+                    findPanel.setVisible(false);
+                    remove(findPanel);
+                    initFindResults(frame,found);
+                }
+            }
+        });
+        findPanel.add(search);
+
+
+        JButton back = new JButton("Back");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                findPanel.setVisible(false);
+                remove(findPanel);
+                init(frame);
+            }
+        });
+        findPanel.add(back);
+    }
+
+    private void initFindResults(Frame frame, ArrayList<Goods> found) {
+        JPanel findResultsPanelMain = new JPanel(new GridLayout(4, 1));
+        add(findResultsPanelMain);
+        findResultsPanelMain.add(new JLabel("Found information:"));
+
+        String text="";
+        if(found.size()==0)  text="We didn`t find any group.";
+        else{
+           for(Goods good:found){
+               text+=good+"\n";
+           }
+        }
+        JTextArea label = new JTextArea(text);
+        label.setLineWrap(true);
+        label.setWrapStyleWord(true);
+        label.setEditable(false);
+        label.setCursor(null);
+        label.setOpaque(false);
+        label.setFocusable(false);
+        label.setFont(new Font("Arial", Font.PLAIN, 18));
+        label.setBounds(20,0,400,100);
+        JScrollPane jScrollPane = new JScrollPane(label);
+
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        findResultsPanelMain.add(jScrollPane);
+
+        JButton back = new JButton("Back");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                findResultsPanelMain.setVisible(false);
+                remove(findResultsPanelMain);
+                initFind(frame);
+            }
+        });
+        findResultsPanelMain.add(back);
+
+
+        JButton main = new JButton("Go to main");
+        main.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                findResultsPanelMain.setVisible(false);
+                remove(findResultsPanelMain);
+                init(frame);
+            }
+        });
+        findResultsPanelMain.add(main);
     }
 
     private void initStatistic(Frame frame) {
