@@ -272,7 +272,7 @@ public class Main {
                 File goodObj = new File("D:\\" + group.getName() + ".txt");
                 FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
                 for (Goods good : group.getGoods()) {
-                    writerGoods.write(good.getName() + "\n");
+                    writerGoods.write(good + "\n");
                 }
                 writerGoods.close();
             }
