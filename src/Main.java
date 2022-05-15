@@ -34,7 +34,7 @@ MenuForm a = new MenuForm();
      * we will delete given goods
      * @param goods - goods to delete
      */
-    private static void deleteGoods(Goods goods) {
+   static void deleteGoods(Goods goods) {
         goodsArrayList.remove(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().remove(goods);
 
@@ -138,13 +138,21 @@ MenuForm a = new MenuForm();
         return new Group(name, description, new ArrayList<Goods>());
     }
 
-    private static void removeGroup(Group group) {
+    static void removeGroup(Group group) {
+       ArrayList <Goods> a = new ArrayList<>();
+        for(int i=0; i<goodsArrayList.size(); i++){
+            if(goodsArrayList.get(i).getGroup().getName().equals(group.getName())){
+                a.add(goodsArrayList.get(i));
+            }
+        }
+        goodsArrayList.removeAll(a);
         groupArrayList.remove(group);
     }
 
-    private static void editGroup(Group group) throws IOException {
-        group.setName(DataInput.getString("Name"));
-        group.setDescription(DataInput.getString("Description"));
+    static void editGroup(Group group, String name, String des) throws IOException {
+        group.setName(name);
+        group.setDescription(des);
+
     }
 
     /**
@@ -155,7 +163,6 @@ MenuForm a = new MenuForm();
         ArrayList<String> answ = new ArrayList<>();
         for (int i = 0; i < groupArrayList.size(); i++) {
             answ.addAll(statisticInfoFromGroup(groupArrayList.get(i)));
-
         }
         return answ;
     }
@@ -167,7 +174,9 @@ MenuForm a = new MenuForm();
      */
     public static ArrayList<String> statisticInfoFromGroup(Group a) {
         ArrayList<String> answ = new ArrayList<>();
-        answ.add("\n" + a.getName());
+        answ.add("\nName: " + a.getName());
+        answ.add("\nDescription: "+a.getDescription());
+        answ.add(statisticInfoGroupPrice(a));
         if (groupArrayList.get(groupArrayList.indexOf(a)).getGoods().size() == 0) {
             answ.add("\nГрупа порожня");
         } else {
@@ -175,6 +184,7 @@ MenuForm a = new MenuForm();
                 answ.add("\n" + groupArrayList.get(groupArrayList.indexOf(a)).getGoods().get(i).toString());
             }
         }
+        answ.add("\n   ");
         return answ;
     }
 
@@ -192,10 +202,9 @@ MenuForm a = new MenuForm();
      * @param a group
      * @return arraylist with info
      */
-    public static ArrayList<String> statisticInfoGroupPrice(Group a) {
-        ArrayList<String> answ = new ArrayList();
-        answ.add("Вартість товару на складі у групі " + a.getName() + countPriceGroup(a));
-        return answ;
+    public static String statisticInfoGroupPrice(Group a) {
+        return     "Вартість товару на складі у групі " + a.getName() + countPriceGroup(a);
+
     }
 
     /**
