@@ -2,10 +2,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -15,36 +11,46 @@ public class Main {
     public static void main(String[] args) throws IOException {
         goodsArrayList = new ArrayList<>();
         groupArrayList = new ArrayList<>();
-        Group dairy=new Group("dairy", "dairy products;", new ArrayList<>());
-        groupArrayList.add(dairy);
-        groupArrayList.add(new Group("bread", "bread products[", new ArrayList<>()));
-        addGoods(new Goods(dairy,"milk","milk good","milk factory",30,15));
-        addGoods(new Goods(dairy,"ice cream","ice cream good","milk factory",10,17));
+        groupArrayList.add(new Group("Cereals", "A cereal is any grass cultivated for the edible components of its grain", new ArrayList<>()));
+        addGoods(new Goods(groupArrayList.get(0), "buckwheat", "Buckwheat is a plant cultivated for its grain-like seeds and as a cover crop.", "Factory 1", 140, 50));
+        addGoods(new Goods(groupArrayList.get(0), "rice", "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima", "Factory 2", 130, 55));
+        addGoods(new Goods(groupArrayList.get(0), "oatmeal", "Oatmeal is a preparation of oats", "Factory 1", 120, 60));
 
-        addGoods(new Goods(dairy,"m","milk good","milk factory",30,15));
-        addGoods(new Goods(dairy,"mn","milk good","milk factory",30,15));
-        addGoods(new Goods(dairy,"mj","milk good","milk factory",30,15));
-        addGoods(new Goods(dairy,"mmkilk","milk good","milk factory",30,15));
-        addGoods(new Goods(dairy,"ml","milk good","milk factory",30,15));
+        groupArrayList.add(new Group("Fruits", "a fruit is the seed-bearing structure in flowering plants that is formed from the ovary after flowering", new ArrayList<>()));
+        addGoods(new Goods(groupArrayList.get(1), "Apple", "An apple is an edible fruit produced by an apple tree (Malus domestica).","Garden 1", 89, 15));
+        addGoods(new Goods(groupArrayList.get(1), "Banana", "A banana is an elongated, edible fruit ", "Garden 2", 107, 50));
 
-MenuForm a = new MenuForm();
-        a.setBounds(200,100,500,500);
+
+        MenuForm a = new MenuForm();
+        a.setBounds(200,100,900,700);
         a.setVisible(true);
     }
 
-
+    /**
+     * we will add new goods
+     * @param goods - goods to add
+     */
     public static void addGoods(Goods goods) {
         goodsArrayList.add(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().add(goods);
 //STRING VALUE OF
     }
 
-    private static void deleteGoods(Goods goods) {
+    /**
+     * we will delete given goods
+     * @param goods - goods to delete
+     */
+   static void deleteGoods(Goods goods) {
         goodsArrayList.remove(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().remove(goods);
 
     }
 
+    /**
+     * we will make a new goods
+     * @return new Goods
+     * @throws IOException
+     */
     private static Goods makeNewGoods() throws IOException {
         Group group = chooseAGroup();
         String name = DataInput.getString("Name:");
@@ -58,8 +64,14 @@ MenuForm a = new MenuForm();
         return new Goods(group, name, describtion, producer, quantity, price);
     }
 
-    //0 - group, 1 - goods
-    private static boolean checkTheNameOnUnique(int k, String name) {
+
+    /**
+     * we will chak the name on unique
+     * @param k 0 - group, 1 - goods
+     * @param name - name to check
+     * @return - true - unique, false - not unique
+     */
+    public static boolean checkTheNameOnUnique(int k, String name) {
         if (k == 0) {
             for (int i = 0; i < groupArrayList.size(); i++) {
                 if (groupArrayList.get(i).getName().equalsIgnoreCase(name)) {
@@ -78,6 +90,10 @@ MenuForm a = new MenuForm();
         return false;
     }
 
+    /**
+     * we will choose a group from given list
+     * @return - choosen group
+     */
     private static Group chooseAGroup() {
         if (groupArrayList.size() > 0) {
             for (int i = 0; i < groupArrayList.size(); i++) {
@@ -89,24 +105,33 @@ MenuForm a = new MenuForm();
         return null;
     }
 
-
-    private static void editGoods(Goods goods) throws IOException {
-        Group newGroup = chooseAGroup();
+    /**
+     * We will edit a goods
+     * @param goods - goods to edit
+     * @param group - group to set
+     * @param name - name to set
+     * @param descr - descr to set
+     * @param prod - producer to set
+     * @param quant - quantity to set
+     * @param price - price to set
+     * @throws IOException
+     */
+     static void editGoods(Goods goods, Group group, String name, String descr, String prod, int quant, double price) throws IOException {
+        Group newGroup = group;
         if (!goods.getGroup().getName().equals(newGroup.getName())) {
-
             groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().remove(goods);
             groupArrayList.get(groupArrayList.indexOf(newGroup)).getGoods().add(goods);
         }
         goods.setGroup(newGroup);
 
-        goods.setPrice(DataInput.getDouble("Price"));
-        goods.setQuantity(DataInput.getInt("Quantity"));
-        goods.setDescription(DataInput.getString("Description"));
-        goods.setProducer(DataInput.getString("Producer"));
-        goods.setName(DataInput.getString("Name"));
+        goods.setPrice(price);
+        goods.setQuantity(quant);
+        goods.setDescription(descr);
+        goods.setProducer(prod);
+        goods.setName(name);
     }
 
-    private static void addGroup(Group group) {
+    static void addGroup(Group group) {
         groupArrayList.add(group);
     }
 
@@ -119,27 +144,45 @@ MenuForm a = new MenuForm();
         return new Group(name, description, new ArrayList<Goods>());
     }
 
-    private static void removeGroup(Group group) {
+    static void removeGroup(Group group) {
+       ArrayList <Goods> a = new ArrayList<>();
+        for(int i=0; i<goodsArrayList.size(); i++){
+            if(goodsArrayList.get(i).getGroup().getName().equals(group.getName())){
+                a.add(goodsArrayList.get(i));
+            }
+        }
+        goodsArrayList.removeAll(a);
         groupArrayList.remove(group);
     }
 
-    private static void editGroup(Group group) throws IOException {
-        group.setName(DataInput.getString("Name"));
-        group.setDescription(DataInput.getString("Description"));
+    static void editGroup(Group group, String name, String des) throws IOException {
+        group.setName(name);
+        group.setDescription(des);
+
     }
 
+    /**
+     * we will get statistic info from the all groups
+     * @return arraylist with info
+     */
     public static ArrayList<String> statisticInfoFromAllGroups() {
         ArrayList<String> answ = new ArrayList<>();
         for (int i = 0; i < groupArrayList.size(); i++) {
             answ.addAll(statisticInfoFromGroup(groupArrayList.get(i)));
-
         }
         return answ;
     }
 
+    /**
+     * we will get statistic info from the group
+     * @param a - group to get info
+     * @return arraylist with info
+     */
     public static ArrayList<String> statisticInfoFromGroup(Group a) {
         ArrayList<String> answ = new ArrayList<>();
-        answ.add("\n" + a.getName());
+        answ.add("\nName: " + a.getName());
+        answ.add("\nDescription: "+a.getDescription());
+        answ.add(statisticInfoGroupPrice(a));
         if (groupArrayList.get(groupArrayList.indexOf(a)).getGoods().size() == 0) {
             answ.add("\nГрупа порожня");
         } else {
@@ -147,22 +190,33 @@ MenuForm a = new MenuForm();
                 answ.add("\n" + groupArrayList.get(groupArrayList.indexOf(a)).getGoods().get(i).toString());
             }
         }
+        answ.add("\n   ");
         return answ;
     }
 
-
+    /**
+     * we will get string with statistic price info about hte storage
+     * @return string with that info
+     */
     public static String statisticInfoGeneralPrice() {
-
         return "Загальна вартість товару на складі " + getPriceAllProduct();
 
     }
 
-    public static ArrayList<String> statisticInfoGroupPrice(Group a) {
-        ArrayList<String> answ = new ArrayList();
-        answ.add("Вартість товару на складі у групі " + a.getName() + countPriceGroup(a));
-        return answ;
+    /**
+     * we will get arraylist with statistic price about the given group
+     * @param a group
+     * @return arraylist with info
+     */
+    public static String statisticInfoGroupPrice(Group a) {
+        return     "Вартість товару на складі у групі " + a.getName() + countPriceGroup(a);
+
     }
 
+    /**
+     * we will get a price of all goods in the storage
+     * @return price of the all product
+     */
     private static double getPriceAllProduct() {
         double answ = 0;
         for (int i = 0; i < groupArrayList.size(); i++) {
@@ -171,6 +225,11 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
+    /**
+     * we will count a price of all goods in group
+     * @param group - group to count a price
+     * @return price
+     */
     private static double countPriceGroup(Group group) {
         double answ = 0;
         for (int i = 0; i < groupArrayList.get(groupArrayList.indexOf(group)).getGoods().size(); i++) {
@@ -180,7 +239,7 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
-    static ArrayList<Goods> findGoodsByName(String name){
+    public static ArrayList<Goods> findGoodsByName(String name){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getName().contains(name)) result.add(good);
@@ -188,7 +247,7 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    static ArrayList<Goods> findGoodsByProducer(String producer){
+    public static ArrayList<Goods> findGoodsByProducer(String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getProducer().contains(producer)) result.add(good);
@@ -196,7 +255,7 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
+    public static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
             if(good.getName().contains(name)&&good.getProducer().contains(producer)) result.add(good);
@@ -204,7 +263,7 @@ MenuForm a = new MenuForm();
         return result;
     }
 
-    static void exportToFiles() {
+    public static void exportToFiles() {
         try {
             File groupObj = new File("D:\\all groups.txt");
             FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
