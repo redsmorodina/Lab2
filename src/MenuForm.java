@@ -34,11 +34,14 @@ public class MenuForm extends JFrame {
         mainPanel = new JPanel(new GridLayout(3, 3));
         add(mainPanel);
         mainPanel.add(new JLabel(""), SwingConstants.CENTER);
-        mainPanel.add(new JLabel("STORAGE"), SwingConstants.CENTER);
-        mainPanel.add(new JLabel(""), SwingConstants.CENTER);
+        JLabel k = new JLabel("STORAGE");
+        k.setFont(new Font("Arial", Font.PLAIN, 25));
+        mainPanel.add(k, SwingConstants.CENTER);
+        mainPanel.add(new JLabel(" "), SwingConstants.CENTER);
 
 
         groupButton = new JButton("Group");
+        groupButton.setFont(new Font("Arial", Font.PLAIN, 25));
         groupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,6 +54,7 @@ public class MenuForm extends JFrame {
 
 
         goodsButton = new JButton("Goods");
+        goodsButton.setFont(new Font("Arial", Font.PLAIN, 25));
         goodsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,6 +67,7 @@ public class MenuForm extends JFrame {
 
 
         supplyButton = new JButton("Supply");
+        supplyButton.setFont(new Font("Arial", Font.PLAIN, 25));
         supplyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,6 +78,7 @@ public class MenuForm extends JFrame {
 
 
         findButton = new JButton("Find");
+        findButton.setFont(new Font("Arial", Font.PLAIN, 25));
         findButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +89,7 @@ public class MenuForm extends JFrame {
 
 
         statisticButton = new JButton("Statistic information");
+        statisticButton.setFont(new Font("Arial", Font.PLAIN, 25));
         statisticButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,6 +102,7 @@ public class MenuForm extends JFrame {
 
 
         fileButton = new JButton("File");
+        fileButton.setFont(new Font("Arial", Font.PLAIN, 25));
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,10 +119,12 @@ public class MenuForm extends JFrame {
     private void initStatistic(Frame frame) {
         JPanel statisticPanelMain = new JPanel(new GridLayout(4, 1));
         add(statisticPanelMain);
-        statisticPanelMain.add(new JLabel("Choose method to show"));
-
+        JLabel m  = new JLabel("Choose method to show");
+m.setFont(new Font("Arial", Font.PLAIN, 25));
+statisticPanelMain.add(m);
 
         JButton allGoods = new JButton("About all goods");
+        allGoods.setFont(new Font("Arial", Font.PLAIN, 25));
         allGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,6 +137,7 @@ public class MenuForm extends JFrame {
 
 
         JButton aboutGroup = new JButton("About the chosen group");
+        aboutGroup.setFont(new Font("Arial", Font.PLAIN, 25));
         aboutGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -139,6 +150,7 @@ public class MenuForm extends JFrame {
 
 
         JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,7 +169,9 @@ public class MenuForm extends JFrame {
     private void initStatisticAllGoods(Frame frame) {
         JPanel statisticAllPanel = new JPanel(new GridLayout(3, 1));
         add(statisticAllPanel);
-        statisticAllPanel.add(new JLabel("Statistic information about all goods"));
+        JLabel G = new JLabel("Statistic information about all goods");
+        G.setFont(new Font("Arial", Font.PLAIN, 25));
+        statisticAllPanel.add(G);
         ArrayList<String> information = Main.statisticInfoFromAllGroups();
         JPanel info = new JPanel(new GridLayout(information.size() + 1, 1));
 
@@ -166,13 +180,12 @@ public class MenuForm extends JFrame {
         y.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         y.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         statisticAllPanel.add(y);
-        // statisticAllPanel.add(y);
-        //statisticAllPanel.add(info);
         info.add(new JLabel(Main.statisticInfoGeneralPrice()));
         for (int i = 0; i < information.size(); i++) {
             info.add(new JLabel(information.get(i)));
         }
         JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -191,10 +204,12 @@ public class MenuForm extends JFrame {
     private void initGroup(Frame frame) {
         groupPanel = new JPanel(new GridLayout(5, 1));
         add(groupPanel);
-        groupPanel.add(new JLabel("GROUP MENU"));
-
+        JLabel p = new JLabel("GROUP MENU");
+p.setFont(new Font("Arial", Font.PLAIN, 25));
+groupPanel.add(p);
 
         JButton addButtonGroup = new JButton("Add");
+        addButtonGroup.setFont(new Font("Arial", Font.PLAIN, 25));
         addButtonGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -207,6 +222,7 @@ public class MenuForm extends JFrame {
 
 
         JButton editButtonGroup = new JButton("Edit");
+        editButtonGroup.setFont(new Font("Arial", Font.PLAIN, 25));
         editButtonGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -223,6 +239,7 @@ initGroupEdit1(frame);
 
 
         JButton deleteButtonGroup = new JButton("Delete");
+        deleteButtonGroup.setFont(new Font("Arial", Font.PLAIN, 25));
         deleteButtonGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -239,6 +256,7 @@ initGroupEdit1(frame);
 
 
         JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.PLAIN, 25));
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,12 +269,16 @@ initGroupEdit1(frame);
     }
 
 
-
+    /**
+     * we will create group deleting panel
+     * @param frame - frame
+     */
     private void initGroupDelete(Frame frame) {
         JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
         add(goodsEditPanel);
-        goodsEditPanel.add(new JLabel("Choose a group"));
-
+        JLabel h =new JLabel("Choose a group");
+h.setFont(new Font("Arial", Font.PLAIN, 25));
+goodsEditPanel.add(h);
         String[] groupNameArray = new String[Main.groupArrayList.size()];
         for (int i = 0; i < Main.groupArrayList.size(); i++) {
             groupNameArray[i] = Main.groupArrayList.get(i).getName();
@@ -266,6 +288,7 @@ initGroupEdit1(frame);
         goodsEditPanel.add(group);
 
         JButton next = new JButton("Delete");
+        next.setFont(new Font("Arial", Font.PLAIN, 25));
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -301,13 +324,16 @@ initGroupEdit1(frame);
     }
 
 
-
-
+    /**
+     * we will fing group to edit
+     * @param frame
+     */
     private void initGroupEdit1(Frame frame) {
             JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
             add(goodsEditPanel);
-            goodsEditPanel.add(new JLabel("Choose a group"));
-
+            JLabel h = new JLabel("Choose a group");
+h.setFont(new Font("Arial", Font.PLAIN, 25));
+goodsEditPanel.add(h);
             String[] groupNameArray = new String[Main.groupArrayList.size()];
             for (int i = 0; i < Main.groupArrayList.size(); i++) {
                 groupNameArray[i] = Main.groupArrayList.get(i).getName();
@@ -317,6 +343,7 @@ initGroupEdit1(frame);
             goodsEditPanel.add(group);
 
             JButton next = new JButton("Next");
+            next.setFont(new Font("Arial", Font.PLAIN, 25));
             next.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -348,15 +375,24 @@ initGroupEdit1(frame);
             goodsEditPanel.add(back);
         }
 
+    /**
+     * we will edit group
+     * @param frame - frame
+     * @param a - group to edit
+     */
     private void initGroupEdit2(Frame frame, Group a) {
-        JPanel groupAddPanel = new JPanel(new GridLayout(4, 2));
+        JPanel groupAddPanel = new JPanel(new GridLayout(3, 2));
         add(groupAddPanel);
-        groupAddPanel.add(new JLabel("Name:"));
+        JLabel KK = new JLabel("Name:");
+        KK.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(KK);
         JTextField nameText = new JTextField();
         nameText.setFont(new Font("Arial", Font.PLAIN, 25));
         groupAddPanel.add(nameText);
 
-        groupAddPanel.add(new JLabel("Description"));
+        JLabel fu = new JLabel("Description");
+        fu.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(fu);
         JTextField descrText = new JTextField();
         descrText.setFont(new Font("Arial", Font.PLAIN, 25));
         groupAddPanel.add(descrText);
@@ -401,6 +437,18 @@ initGroupEdit1(frame);
             }
         });
         groupAddPanel.add(addButton);
+
+        JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                groupAddPanel.setVisible(false);
+                remove(groupAddPanel);
+                initGroup(frame);
+            }
+        });
+        groupAddPanel.add(back);
     }
 
 
@@ -411,15 +459,21 @@ initGroupEdit1(frame);
     private void initGroupAdd(Frame frame) {
         JPanel groupAddPanel = new JPanel(new GridLayout(4, 2));
         add(groupAddPanel);
-        groupAddPanel.add(new JLabel("ADD A GROUP"));
+        JLabel i = new JLabel("ADD A GROUP");
+        i.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(i);
         groupAddPanel.add(new JLabel("   "));
 
-        groupAddPanel.add(new JLabel("Name:"));
+        JLabel u = new JLabel("Name:");
+        u.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(u);
         JTextField nameText = new JTextField();
         nameText.setFont(new Font("Arial", Font.PLAIN, 25));
         groupAddPanel.add(nameText);
 
-        groupAddPanel.add(new JLabel("Description"));
+        JLabel d = new JLabel("Description");
+        d.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(d);
         JTextField descrText = new JTextField();
         descrText.setFont(new Font("Arial", Font.PLAIN, 25));
         groupAddPanel.add(descrText);
@@ -472,10 +526,12 @@ initGroupEdit1(frame);
     private void initGoods(Frame frame) {
         JPanel goodsPanel = new JPanel(new GridLayout(5, 1));
         add(goodsPanel);
-        goodsPanel.add(new JLabel("GOODS MENU"));
-
+        JLabel f =new JLabel("GOODS MENU");
+f.setFont(new Font("Arial", Font.PLAIN, 25));
+goodsPanel.add(f);
 
         JButton addButtonGoods = new JButton("Add");
+        addButtonGoods.setFont(new Font("Arial", Font.PLAIN, 25));
         addButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -490,6 +546,7 @@ initGroupEdit1(frame);
         });
         goodsPanel.add(addButtonGoods);
         JButton editButtonGoods = new JButton("Edit");
+        editButtonGoods.setFont(new Font("Arial", Font.PLAIN, 25));
         editButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -510,6 +567,7 @@ initGroupEdit1(frame);
 
 
         JButton deleteButtonGoods = new JButton("Delete");
+        deleteButtonGoods.setFont(new Font("Arial", Font.PLAIN, 25));
         deleteButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -528,6 +586,7 @@ initGroupEdit1(frame);
 
 
         JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.PLAIN, 25));
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -547,8 +606,9 @@ initGroupEdit1(frame);
     private void initGoodsEdit(Frame frame, int mode ) {
         JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
         add(goodsEditPanel);
-        goodsEditPanel.add(new JLabel("Choose a group"));
-
+       JLabel hhh = new JLabel("Choose a group");
+hhh.setFont(new Font("Arial", Font.PLAIN, 25));
+goodsEditPanel.add(hhh);
         String[] groupNameArray = new String[Main.groupArrayList.size()];
         for (int i = 0; i < Main.groupArrayList.size(); i++) {
             groupNameArray[i] = Main.groupArrayList.get(i).getName();
@@ -558,6 +618,7 @@ initGroupEdit1(frame);
         goodsEditPanel.add(group);
 
         JButton next = new JButton("Next");
+        next.setFont(new Font("Arial", Font.PLAIN, 25));
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -579,18 +640,33 @@ initGroupEdit1(frame);
             }
         });
         goodsEditPanel.add(next);
+        if(mode!=3) {
 
-        JButton back = new JButton("Back");
-        back.setFont(new Font("Arial", Font.PLAIN, 25));
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                goodsEditPanel.setVisible(false);
-                remove(goodsEditPanel);
-                initGoods(frame);
-            }
-        });
-        goodsEditPanel.add(back);
+            JButton back = new JButton("Back");
+            back.setFont(new Font("Arial", Font.PLAIN, 25));
+            back.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    goodsEditPanel.setVisible(false);
+                    remove(goodsEditPanel);
+                    initGoods(frame);
+                }
+            });
+            goodsEditPanel.add(back);
+        }
+        else{
+            JButton back = new JButton("Back");
+            back.setFont(new Font("Arial", Font.PLAIN, 25));
+            back.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    goodsEditPanel.setVisible(false);
+                    remove(goodsEditPanel);
+                    initStatistic(frame);
+                }
+            });
+            goodsEditPanel.add(back);
+        }
     }
 
     /**
@@ -602,8 +678,9 @@ initGroupEdit1(frame);
     private void initGoodsEdit2(Frame frame, Group group, int mode) {
         JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
         add(goodsEditPanel);
-        goodsEditPanel.add(new JLabel("Choose a goods"));
-
+        JLabel a = new JLabel("Choose a goods");
+a.setFont(new Font("Arial", Font.PLAIN, 25));
+goodsEditPanel.add(a);
         ArrayList<Goods> goodsFromGroup = group.getGoods();
 
 
@@ -615,7 +692,16 @@ initGroupEdit1(frame);
         JComboBox goods = new JComboBox(goodsNameArray);
         goodsEditPanel.add(goods);
 
-        JButton next = new JButton("Next");
+        String text;
+        if(mode ==1){
+            text = "Next";
+        }
+        else{
+            text = "Delete";
+        }
+
+        JButton next = new JButton(text);
+        next.setFont(new Font("Arial", Font.PLAIN, 25));
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -653,11 +739,18 @@ initGroupEdit1(frame);
         goodsEditPanel.add(back);
     }
 
+    /**
+     * we will show static info for the group
+     * @param frame - frame
+     * @param a - group to show statistic
+     */
     private void initStatisticGroup(Frame frame, Group a) {
 
         JPanel statisticAllPanel = new JPanel(new GridLayout(3, 1));
         add(statisticAllPanel);
-        statisticAllPanel.add(new JLabel("Statistic information about "+a.getName()));
+        JLabel editLeee = new JLabel("Statistic information about "+a.getName());
+        editLeee.setFont(new Font("Arial", Font.PLAIN, 25));
+        statisticAllPanel.add(editLeee);
         ArrayList<String> information = Main.statisticInfoFromGroup(a);
         JPanel info = new JPanel(new GridLayout(information.size() + 1, 1));
 
@@ -666,8 +759,6 @@ initGroupEdit1(frame);
         y.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         y.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         statisticAllPanel.add(y);
-        // statisticAllPanel.add(y);
-        //statisticAllPanel.add(info);
         info.add(new JLabel(Main.statisticInfoGeneralPrice()));
         for (int i = 0; i < information.size(); i++) {
             info.add(new JLabel(information.get(i)));
@@ -695,11 +786,14 @@ initGroupEdit1(frame);
     private void initGoodsEdit3(Frame frame, Goods a) {
         JPanel goodsEditPanel = new JPanel(new GridLayout(8, 2));
         add(goodsEditPanel);
-
-        goodsEditPanel.add(new JLabel("Edit a goods"));
+        JLabel editL = new JLabel("Edit a goods");
+        editL.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editL);
         goodsEditPanel.add(new JLabel("   "));
 
-        goodsEditPanel.add(new JLabel("Group"));
+        JLabel groupL = new JLabel("Group");
+        groupL.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(groupL);
         String[] groupNameArray = new String[Main.groupArrayList.size()];
         for (int i = 0; i < Main.groupArrayList.size(); i++) {
             groupNameArray[i] = Main.groupArrayList.get(i).getName();
@@ -708,28 +802,39 @@ initGroupEdit1(frame);
         JComboBox group = new JComboBox(groupNameArray);
         goodsEditPanel.add(group);
 
-        goodsEditPanel.add(new JLabel("Name:"));
+        JLabel editL1 = new JLabel("Name");
+        editL1.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editL1);
         JTextField nameText = new JTextField();
         nameText.setFont(new Font("Arial", Font.PLAIN, 25));
         goodsEditPanel.add(nameText);
 
-        goodsEditPanel.add(new JLabel("Description"));
+        JLabel editL2 = new JLabel("Description");
+        editL2.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editL2);
         JTextField descrText = new JTextField();
         descrText.setFont(new Font("Arial", Font.PLAIN, 25));
         goodsEditPanel.add(descrText);
 
-        goodsEditPanel.add(new JLabel("Producer"));
+        JLabel editL3 = new JLabel("Producer");
+        editL3.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editL3);
         JTextField prodText = new JTextField();
         prodText.setFont(new Font("Arial", Font.PLAIN, 25));
         goodsEditPanel.add(prodText);
 
-        goodsEditPanel.add(new JLabel("Quantity"));
+        JLabel editL44 = new JLabel("Quantity");
+        editL44.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editL44);
         JSpinner quantity = new JSpinner(new SpinnerNumberModel(a.getQuantity(), 0, 1000000, 1));
         
         quantity.setSize(700, 300);
         quantity.setFont(new Font("Arial", Font.PLAIN, 25));
         goodsEditPanel.add(quantity);
-        goodsEditPanel.add(new JLabel("Price"));
+
+        JLabel editLww = new JLabel("Price");
+        editLww.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(editLww);
         JSpinner price = new JSpinner(new SpinnerNumberModel(a.getPrice(), 0, 1000000, 0.1));
         price.setSize(700, 300);
         price.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -791,6 +896,18 @@ initGroupEdit1(frame);
             }
         });
         goodsEditPanel.add(addButton);
+
+        JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goodsEditPanel.setVisible(false);
+                remove(goodsEditPanel);
+                initGoods(frame);
+            }
+        });
+        goodsEditPanel.add(back);
     }
 
     /**
@@ -800,7 +917,10 @@ initGroupEdit1(frame);
     private void initGoodsAdd(Frame frame) {
         JPanel goodsAddPanel = new JPanel(new GridLayout(8, 2));
         add(goodsAddPanel);
-        goodsAddPanel.add(new JLabel("ADD A GOODS"));
+        //
+        JLabel addLabel = new JLabel("ADD A GOODS");
+        addLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsAddPanel.add(addLabel);
         goodsAddPanel.add(new JLabel("   "));
 
         goodsAddPanel.add(new JLabel("Goods"));

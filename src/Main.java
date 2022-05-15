@@ -12,11 +12,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         goodsArrayList = new ArrayList<>();
         groupArrayList = new ArrayList<>();
-        groupArrayList.add(new Group("ghjk", "hjkl;", new ArrayList<>()));
-        groupArrayList.add(new Group("fghjk", "uiop[", new ArrayList<>()));
+        groupArrayList.add(new Group("Cereals", "A cereal is any grass cultivated for the edible components of its grain", new ArrayList<>()));
+        addGoods(new Goods(groupArrayList.get(0), "buckwheat", "Buckwheat is a plant cultivated for its grain-like seeds and as a cover crop.", "Factory 1", 140, 50));
+        addGoods(new Goods(groupArrayList.get(0), "rice", "Rice is the seed of the grass species Oryza sativa or less commonly Oryza glaberrima", "Factory 2", 130, 55));
+        addGoods(new Goods(groupArrayList.get(0), "oatmeal", "Oatmeal is a preparation of oats", "Factory 1", 120, 60));
 
-MenuForm a = new MenuForm();
-        a.setBounds(200,100,500,500);
+        groupArrayList.add(new Group("Fruits", "a fruit is the seed-bearing structure in flowering plants that is formed from the ovary after flowering", new ArrayList<>()));
+        addGoods(new Goods(groupArrayList.get(1), "Apple", "An apple is an edible fruit produced by an apple tree (Malus domestica).","Garden 1", 89, 15));
+        addGoods(new Goods(groupArrayList.get(1), "Banana", "A banana is an elongated, edible fruit ", "Garden 2", 107, 50));
+
+
+        MenuForm a = new MenuForm();
+        a.setBounds(200,100,900,700);
         a.setVisible(true);
     }
 
