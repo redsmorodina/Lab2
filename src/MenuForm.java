@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class MenuForm extends JFrame{
+public class MenuForm extends JFrame {
     JPanel mainPanel;
     JPanel groupPanel;
     JPanel goodsPanel;
@@ -25,6 +26,10 @@ public class MenuForm extends JFrame{
 
     }
 
+    /**
+     * We will create main panel
+     * @param frame - frame
+     */
     private void init(Frame frame) {
         mainPanel = new JPanel(new GridLayout(3, 3));
         add(mainPanel);
@@ -99,6 +104,10 @@ public class MenuForm extends JFrame{
         mainPanel.add(fileButton);
     }
 
+    /**
+     * we will create statistic info main panel
+     * @param frame
+     */
     private void initStatistic(Frame frame) {
         JPanel statisticPanelMain = new JPanel(new GridLayout(4, 1));
         add(statisticPanelMain);
@@ -139,22 +148,26 @@ public class MenuForm extends JFrame{
         statisticPanelMain.add(back);
     }
 
+    /**
+     * we will make a panel with statistic info about all goods
+     * @param frame
+     */
     private void initStatisticAllGoods(Frame frame) {
         JPanel statisticAllPanel = new JPanel(new GridLayout(3, 1));
         add(statisticAllPanel);
         statisticAllPanel.add(new JLabel("Statistic information about all goods"));
         ArrayList<String> information = Main.statisticInfoFromAllGroups();
-        JPanel info = new JPanel(new GridLayout(information.size()+1, 1));
+        JPanel info = new JPanel(new GridLayout(information.size() + 1, 1));
 
         JScrollPane y = new JScrollPane(info);
 
         y.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         y.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         statisticAllPanel.add(y);
-       // statisticAllPanel.add(y);
+        // statisticAllPanel.add(y);
         //statisticAllPanel.add(info);
         info.add(new JLabel(Main.statisticInfoGeneralPrice()));
-        for(int i=0; i<information.size(); i++){
+        for (int i = 0; i < information.size(); i++) {
             info.add(new JLabel(information.get(i)));
         }
         JButton back = new JButton("Back");
@@ -169,6 +182,10 @@ public class MenuForm extends JFrame{
         statisticAllPanel.add(back);
     }
 
+    /**
+     * we will create panel with add|delete|edit mode for group
+     * @param frame - frame
+     */
     private void initGroup(Frame frame) {
         groupPanel = new JPanel(new GridLayout(5, 1));
         add(groupPanel);
@@ -191,10 +208,9 @@ public class MenuForm extends JFrame{
         editButtonGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.groupArrayList.size()<=0){
-new Error("There is no group. Please, add a group before editing.");
-                }
-                else{
+                if (Main.groupArrayList.size() <= 0) {
+                    new Error("There is no group. Please, add a group before editing.");
+                } else {
 
                 }
             }
@@ -206,10 +222,9 @@ new Error("There is no group. Please, add a group before editing.");
         deleteButtonGroup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.groupArrayList.size()<=0){
+                if (Main.groupArrayList.size() <= 0) {
                     new Error("There is no group. Please, add a group before deleting.");
-                }
-                else{
+                } else {
 
                 }
             }
@@ -229,47 +244,73 @@ new Error("There is no group. Please, add a group before editing.");
         groupPanel.add(backButton);
     }
 
+    /**
+     * we will create a group adding panel
+     * @param frame - frame
+     */
     private void initGroupAdd(Frame frame) {
-JPanel groupAddPanel = new JPanel(new GridLayout(4, 2));
-add(groupAddPanel);
-groupAddPanel.add(new JLabel("ADD A GROUP"));
-groupAddPanel.add(new JLabel("   "));
+        JPanel groupAddPanel = new JPanel(new GridLayout(4, 2));
+        add(groupAddPanel);
+        groupAddPanel.add(new JLabel("ADD A GROUP"));
+        groupAddPanel.add(new JLabel("   "));
 
-groupAddPanel.add(new JLabel("Name:"));
-JTextField nameText = new JTextField();
-nameText.setFont(new Font("Arial", Font.PLAIN, 25));
-groupAddPanel.add(nameText);
+        groupAddPanel.add(new JLabel("Name:"));
+        JTextField nameText = new JTextField();
+        nameText.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(nameText);
 
-groupAddPanel.add(new JLabel("Description"));
-JTextField descrText = new JTextField();
-descrText.setFont(new Font("Arial", Font.PLAIN, 25));
-groupAddPanel.add(descrText);
+        groupAddPanel.add(new JLabel("Description"));
+        JTextField descrText = new JTextField();
+        descrText.setFont(new Font("Arial", Font.PLAIN, 25));
+        groupAddPanel.add(descrText);
 
-JButton addButton = new JButton("Add");
-addButton.setFont(new Font("Arial", Font.PLAIN, 25));
-addButton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
+        JButton addButton = new JButton("Add");
+        addButton.setFont(new Font("Arial", Font.PLAIN, 25));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+
+
+
+                if (nameText.getText().equals("") || descrText.getText().equals("")) {
+                    new Error("Please, fill all fields");
+
+                } else if (!Main.checkTheNameOnUnique(0, nameText.getText())) {
+                    new Error("Please, change the group name. This group name has already been used");
+                } else {
+
+                    Main.addGroup(new Group(nameText.getText(), descrText.getText(), new ArrayList<Goods>()));
+                    groupAddPanel.setVisible(false);
+                    remove(groupAddPanel);
+                    initGroup(frame);
+                }
+
+
+
+            }
+        });
+        groupAddPanel.add(addButton);
+
+        JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                groupAddPanel.setVisible(false);
+                remove(groupAddPanel);
+                initGroup(frame);
+            }
+        });
+        groupAddPanel.add(back);
     }
-});
-groupAddPanel.add(addButton);
 
-JButton back = new JButton("Back");
-back.setFont(new Font("Arial", Font.PLAIN, 25));
-back.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        groupAddPanel.setVisible(false);
-        remove(groupAddPanel);
-        initGroup(frame);
-    }
-});
-groupAddPanel.add(back);
-    }
-
+    /**
+     * we will create main edit|add|delete panel for goods
+     * @param frame - frame
+     */
     private void initGoods(Frame frame) {
-       JPanel goodsPanel = new JPanel(new GridLayout(5, 1));
+        JPanel goodsPanel = new JPanel(new GridLayout(5, 1));
         add(goodsPanel);
         goodsPanel.add(new JLabel("GOODS MENU"));
 
@@ -278,31 +319,30 @@ groupAddPanel.add(back);
         addButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.groupArrayList.size()<=0){
+                if (Main.groupArrayList.size() <= 0) {
                     new Error("There is no group. Please, add a group before adding a goods.");
-                }
-                else{
-goodsPanel.setVisible(false);
-remove(goodsPanel);
-initGoodsAdd(frame);
+                } else {
+                    goodsPanel.setVisible(false);
+                    remove(goodsPanel);
+                    initGoodsAdd(frame);
                 }
             }
         });
         goodsPanel.add(addButtonGoods);
-
-
         JButton editButtonGoods = new JButton("Edit");
         editButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.groupArrayList.size()<=0){
+                if (Main.groupArrayList.size() <= 0) {
                     new Error("There is no group. Please, add a group before editing.");
-                }
-                else if (Main.goodsArrayList.size()<=0){
+                } else if (Main.goodsArrayList.size() <= 0) {
                     new Error("There is no goods. Please, add a goods before editing.");
-                }
-                else{
+                } else {
+                    goodsPanel.setVisible(false);
+                    remove(goodsPanel);
 
+
+                    initGoodsEdit(frame);
                 }
             }
         });
@@ -313,13 +353,11 @@ initGoodsAdd(frame);
         deleteButtonGoods.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Main.groupArrayList.size()<=0){
+                if (Main.groupArrayList.size() <= 0) {
                     new Error("There is no group. Please, add a group before deleting.");
-                }
-                else if (Main.goodsArrayList.size()<=0){
+                } else if (Main.goodsArrayList.size() <= 0) {
                     new Error("There is no goods. Please, add a goods before deleting.");
-                }
-                else{
+                } else {
 
                 }
             }
@@ -339,6 +377,218 @@ initGoodsAdd(frame);
         goodsPanel.add(backButton);
     }
 
+    /**
+     * we will create panel for choosing a group
+     * @param frame - frame
+     */
+    private void initGoodsEdit(Frame frame) {
+        JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
+        add(goodsEditPanel);
+        goodsEditPanel.add(new JLabel("Choose a group"));
+
+        String[] groupNameArray = new String[Main.groupArrayList.size()];
+        for (int i = 0; i < Main.groupArrayList.size(); i++) {
+            groupNameArray[i] = Main.groupArrayList.get(i).getName();
+        }
+
+        JComboBox group = new JComboBox(groupNameArray);
+        goodsEditPanel.add(group);
+
+        JButton next = new JButton("Next");
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goodsEditPanel.setVisible(false);
+                remove(goodsEditPanel);
+                Group a = null;
+                String groupName = (String) group.getSelectedItem();
+                for (int i = 0; i < Main.groupArrayList.size(); i++) {
+                    if (groupName.equals(Main.groupArrayList.get(i).getName())) {
+                        a = Main.groupArrayList.get(i);
+                        break;
+                    }
+                }
+                initGoodsEdit2(frame, a);
+            }
+        });
+        goodsEditPanel.add(next);
+
+        JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goodsEditPanel.setVisible(false);
+                remove(goodsEditPanel);
+                initGoods(frame);
+            }
+        });
+        goodsEditPanel.add(back);
+    }
+
+    /**
+     * we will choose a goods from the list
+     * @param frame - frame
+     * @param group - group to find goods
+     */
+    private void initGoodsEdit2(Frame frame, Group group) {
+        JPanel goodsEditPanel = new JPanel(new GridLayout(4, 1));
+        add(goodsEditPanel);
+        goodsEditPanel.add(new JLabel("Choose a goods"));
+
+        ArrayList<Goods> goodsFromGroup = group.getGoods();
+
+
+        String[] goodsNameArray = new String[goodsFromGroup.size()];
+        for (int i = 0; i < goodsFromGroup.size(); i++) {
+            goodsNameArray[i] = goodsFromGroup.get(i).getName();
+        }
+
+        JComboBox goods = new JComboBox(goodsNameArray);
+        goodsEditPanel.add(goods);
+
+        JButton next = new JButton("Next");
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goodsEditPanel.setVisible(false);
+                remove(goodsEditPanel);
+                Goods a = null;
+                String goodsName = (String) goods.getSelectedItem();
+                for (int i = 0; i < Main.goodsArrayList.size(); i++) {
+                    if (goodsName.equals(Main.goodsArrayList.get(i).getName())) {
+                        a = Main.goodsArrayList.get(i);
+                        break;
+                    }
+                }
+                initGoodsEdit3(frame, a);
+            }
+        });
+        goodsEditPanel.add(next);
+
+        JButton back = new JButton("Back");
+        back.setFont(new Font("Arial", Font.PLAIN, 25));
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goodsEditPanel.setVisible(false);
+                remove(goodsEditPanel);
+                initGoodsEdit(frame);
+            }
+        });
+        goodsEditPanel.add(back);
+    }
+
+    /**
+     * We will make goods edit panel
+     * @param frame - frame
+     * @param a - goods to edit
+     */
+    private void initGoodsEdit3(Frame frame, Goods a) {
+        JPanel goodsEditPanel = new JPanel(new GridLayout(8, 2));
+        add(goodsEditPanel);
+
+        goodsEditPanel.add(new JLabel("Edit a goods"));
+        goodsEditPanel.add(new JLabel("   "));
+
+        goodsEditPanel.add(new JLabel("Group"));
+        String[] groupNameArray = new String[Main.groupArrayList.size()];
+        for (int i = 0; i < Main.groupArrayList.size(); i++) {
+            groupNameArray[i] = Main.groupArrayList.get(i).getName();
+        }
+
+        JComboBox group = new JComboBox(groupNameArray);
+        goodsEditPanel.add(group);
+
+        goodsEditPanel.add(new JLabel("Name:"));
+        JTextField nameText = new JTextField();
+        nameText.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(nameText);
+
+        goodsEditPanel.add(new JLabel("Description"));
+        JTextField descrText = new JTextField();
+        descrText.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(descrText);
+
+        goodsEditPanel.add(new JLabel("Producer"));
+        JTextField prodText = new JTextField();
+        prodText.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(prodText);
+
+        goodsEditPanel.add(new JLabel("Quantity"));
+        JSpinner quantity = new JSpinner(new SpinnerNumberModel(a.getQuantity(), 0, 1000000, 1));
+        
+        quantity.setSize(700, 300);
+        quantity.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(quantity);
+        goodsEditPanel.add(new JLabel("Price"));
+        JSpinner price = new JSpinner(new SpinnerNumberModel(a.getPrice(), 0, 1000000, 0.1));
+        price.setSize(700, 300);
+        price.setFont(new Font("Arial", Font.PLAIN, 25));
+        goodsEditPanel.add(price);
+
+        JButton addButton = new JButton("OK");
+        addButton.setFont(new Font("Arial", Font.PLAIN, 25));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!Main.checkTheNameOnUnique(1, nameText.getText()) && !nameText.getText().equals(a.getName())) {
+                    new Error("Please, change the goods name. This group name has already been used");
+                } else {
+                    String groupGoods = (String) group.getSelectedItem();
+                    Group ab = null;
+                    for (int i = 0; i < Main.groupArrayList.size(); i++) {
+                        if (groupGoods.equals(Main.groupArrayList.get(i).getName())) {
+                            ab = Main.groupArrayList.get(i);
+                            break;
+                        }
+                    }
+                    int q = (int) quantity.getValue();
+                    double p = (double) price.getValue();
+                    String n;
+                    if(nameText.getText().equals("")){
+                        n = a.getName();
+                    }
+                    else{
+                        n = nameText.getText();
+                    }
+
+                    String d;
+                    if(descrText.getText().equals("")){
+                        d = a.getDescription();
+                    }
+                    else{
+                        d = descrText.getText();
+                    }
+
+                    String pr;
+                    if(prodText.getText().equals("")){
+                        pr = a.getProducer();
+                    }
+                    else{
+                        pr = prodText.getText();
+                    }
+
+
+
+                    try {
+                        Main.editGoods(a, ab, n, d, pr, q, p);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    goodsEditPanel.setVisible(false);
+                    remove(goodsEditPanel);
+                    initGoods(frame);
+                }
+            }
+        });
+        goodsEditPanel.add(addButton);
+    }
+
+    /**
+     * we will make a panel to add a goods
+     * @param frame - frame
+     */
     private void initGoodsAdd(Frame frame) {
         JPanel goodsAddPanel = new JPanel(new GridLayout(8, 2));
         add(goodsAddPanel);
@@ -346,29 +596,14 @@ initGoodsAdd(frame);
         goodsAddPanel.add(new JLabel("   "));
 
         goodsAddPanel.add(new JLabel("Goods"));
-        String [] groupNameArray = new String[Main.groupArrayList.size()];
-        for(int i=0; i<Main.groupArrayList.size(); i++){
-           groupNameArray[i]=Main.groupArrayList.get(i).getName();
+        String[] groupNameArray = new String[Main.groupArrayList.size()];
+        for (int i = 0; i < Main.groupArrayList.size(); i++) {
+            groupNameArray[i] = Main.groupArrayList.get(i).getName();
         }
-
-        //String groupGoods;
 
         JComboBox group = new JComboBox(groupNameArray);
         goodsAddPanel.add(group);
-        /*
-        group.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                groupGoods = group.getName();
-            }
-        });
 
-
-        String
-        System.out.println(groupGoods);
-
-
-         */
         goodsAddPanel.add(new JLabel("Name:"));
         JTextField nameText = new JTextField();
         nameText.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -401,25 +636,27 @@ initGoodsAdd(frame);
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-if(nameText.getText().equals("") || descrText.getText().equals("")|| prodText.getText().equals("")){
-    new Error("Please, fill all fields");
-}
-else{
-    String groupGoods = (String) group.getSelectedItem();
-    Group a = null;
-    for(int i=0; i<Main.groupArrayList.size(); i++){
-        if(groupGoods.equals(Main.groupArrayList.get(i).getName())){
-            a = Main.groupArrayList.get(i);
-            break;
-        }
-    }
-    int q = (int) quantity.getValue();
-    double p = (double) price.getValue();
-    Main.addGoods(new Goods(a, nameText.getText(), descrText.getText(), prodText.getText(), q, p));
-    goodsAddPanel.setVisible(false);
-    remove(goodsAddPanel);
-    initGoods(frame);
-}
+                if (nameText.getText().equals("") || descrText.getText().equals("") || prodText.getText().equals("")) {
+                    new Error("Please, fill all fields");
+
+                } else if (!Main.checkTheNameOnUnique(1, nameText.getText())) {
+                    new Error("Please, change the goods name. This goods name has already been used");
+                } else {
+                    String groupGoods = (String) group.getSelectedItem();
+                    Group a = null;
+                    for (int i = 0; i < Main.groupArrayList.size(); i++) {
+                        if (groupGoods.equals(Main.groupArrayList.get(i).getName())) {
+                            a = Main.groupArrayList.get(i);
+                            break;
+                        }
+                    }
+                    int q = (int) quantity.getValue();
+                    double p = (double) price.getValue();
+                    Main.addGoods(new Goods(a, nameText.getText(), descrText.getText(), prodText.getText(), q, p));
+                    goodsAddPanel.setVisible(false);
+                    remove(goodsAddPanel);
+                    initGoods(frame);
+                }
             }
         });
         goodsAddPanel.add(addButton);
@@ -435,7 +672,6 @@ else{
             }
         });
         goodsAddPanel.add(back);
+
     }
-
-
 }

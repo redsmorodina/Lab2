@@ -2,10 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class Main {
 
@@ -23,19 +20,31 @@ MenuForm a = new MenuForm();
         a.setVisible(true);
     }
 
-
+    /**
+     * we will add new goods
+     * @param goods - goods to add
+     */
     public static void addGoods(Goods goods) {
         goodsArrayList.add(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().add(goods);
 //STRING VALUE OF
     }
 
+    /**
+     * we will delete given goods
+     * @param goods - goods to delete
+     */
     private static void deleteGoods(Goods goods) {
         goodsArrayList.remove(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().remove(goods);
 
     }
 
+    /**
+     * we will make a new goods
+     * @return new Goods
+     * @throws IOException
+     */
     private static Goods makeNewGoods() throws IOException {
         Group group = chooseAGroup();
         String name = DataInput.getString("Name:");
@@ -49,8 +58,14 @@ MenuForm a = new MenuForm();
         return new Goods(group, name, describtion, producer, quantity, price);
     }
 
-    //0 - group, 1 - goods
-    private static boolean checkTheNameOnUnique(int k, String name) {
+
+    /**
+     * we will chak the name on unique
+     * @param k 0 - group, 1 - goods
+     * @param name - name to check
+     * @return - true - unique, false - not unique
+     */
+    public static boolean checkTheNameOnUnique(int k, String name) {
         if (k == 0) {
             for (int i = 0; i < groupArrayList.size(); i++) {
                 if (groupArrayList.get(i).getName().equalsIgnoreCase(name)) {
@@ -69,6 +84,10 @@ MenuForm a = new MenuForm();
         return false;
     }
 
+    /**
+     * we will choose a group from given list
+     * @return - choosen group
+     */
     private static Group chooseAGroup() {
         if (groupArrayList.size() > 0) {
             for (int i = 0; i < groupArrayList.size(); i++) {
@@ -80,24 +99,33 @@ MenuForm a = new MenuForm();
         return null;
     }
 
-
-    private static void editGoods(Goods goods) throws IOException {
-        Group newGroup = chooseAGroup();
+    /**
+     * We will edit a goods
+     * @param goods - goods to edit
+     * @param group - group to set
+     * @param name - name to set
+     * @param descr - descr to set
+     * @param prod - producer to set
+     * @param quant - quantity to set
+     * @param price - price to set
+     * @throws IOException
+     */
+     static void editGoods(Goods goods, Group group, String name, String descr, String prod, int quant, double price) throws IOException {
+        Group newGroup = group;
         if (!goods.getGroup().getName().equals(newGroup.getName())) {
-
             groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().remove(goods);
             groupArrayList.get(groupArrayList.indexOf(newGroup)).getGoods().add(goods);
         }
         goods.setGroup(newGroup);
 
-        goods.setPrice(DataInput.getDouble("Price"));
-        goods.setQuantity(DataInput.getInt("Quantity"));
-        goods.setDescription(DataInput.getString("Description"));
-        goods.setProducer(DataInput.getString("Producer"));
-        goods.setName(DataInput.getString("Name"));
+        goods.setPrice(price);
+        goods.setQuantity(quant);
+        goods.setDescription(descr);
+        goods.setProducer(prod);
+        goods.setName(name);
     }
 
-    private static void addGroup(Group group) {
+    static void addGroup(Group group) {
         groupArrayList.add(group);
     }
 
@@ -119,6 +147,10 @@ MenuForm a = new MenuForm();
         group.setDescription(DataInput.getString("Description"));
     }
 
+    /**
+     * we will get statistic info from the all groups
+     * @return arraylist with info
+     */
     public static ArrayList<String> statisticInfoFromAllGroups() {
         ArrayList<String> answ = new ArrayList<>();
         for (int i = 0; i < groupArrayList.size(); i++) {
@@ -128,6 +160,11 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
+    /**
+     * we will get statistic info from the group
+     * @param a - group to get info
+     * @return arraylist with info
+     */
     public static ArrayList<String> statisticInfoFromGroup(Group a) {
         ArrayList<String> answ = new ArrayList<>();
         answ.add("\n" + a.getName());
@@ -141,19 +178,30 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
-
+    /**
+     * we will get string with statistic price info about hte storage
+     * @return string with that info
+     */
     public static String statisticInfoGeneralPrice() {
-
         return "Загальна вартість товару на складі " + getPriceAllProduct();
 
     }
 
+    /**
+     * we will get arraylist with statistic price about the given group
+     * @param a group
+     * @return arraylist with info
+     */
     public static ArrayList<String> statisticInfoGroupPrice(Group a) {
         ArrayList<String> answ = new ArrayList();
         answ.add("Вартість товару на складі у групі " + a.getName() + countPriceGroup(a));
         return answ;
     }
 
+    /**
+     * we will get a price of all goods in the storage
+     * @return price of the all product
+     */
     private static double getPriceAllProduct() {
         double answ = 0;
         for (int i = 0; i < groupArrayList.size(); i++) {
@@ -162,6 +210,11 @@ MenuForm a = new MenuForm();
         return answ;
     }
 
+    /**
+     * we will count a price of all goods in group
+     * @param group - group to count a price
+     * @return price
+     */
     private static double countPriceGroup(Group group) {
         double answ = 0;
         for (int i = 0; i < groupArrayList.get(groupArrayList.indexOf(group)).getGoods().size(); i++) {
