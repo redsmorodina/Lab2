@@ -266,10 +266,12 @@ public class Main {
     public static void exportToFiles() {
         try {
             File groupObj = new File("D:\\all groups.txt");
+            //File groupObj = new File("C:\\vbn\\all groups.txt");
             FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
             for (Group group : groupArrayList) {
                 writerGroup.write(group.getName() + "\n");
                 File goodObj = new File("D:\\" + group.getName() + ".txt");
+               // File goodObj = new File("C:\\vbn\\" + group.getName() + ".txt");
                 FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
                 for (Goods good : group.getGoods()) {
                     writerGoods.write(good + "\n");

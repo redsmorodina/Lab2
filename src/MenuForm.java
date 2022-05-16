@@ -534,9 +534,11 @@ goodsEditPanel.add(h);
                     }
                 }
                 Main.removeGroup(a);
+
                 goodsEditPanel.setVisible(false);
                 remove(goodsEditPanel);
                 initGroup(frame);
+                new Message("Done");
             }
         });
         goodsEditPanel.add(next);
@@ -664,6 +666,7 @@ goodsEditPanel.add(h);
                     groupAddPanel.setVisible(false);
                     remove(groupAddPanel);
                     initGoods(frame);
+                    new Message("Done");
                 }
             }
         });
@@ -726,6 +729,7 @@ goodsEditPanel.add(h);
                 } else {
 
                     Main.addGroup(new Group(nameText.getText(), descrText.getText(), new ArrayList<Goods>()));
+                    new Message("Done");
                     groupAddPanel.setVisible(false);
                     remove(groupAddPanel);
                     initGroup(frame);
@@ -951,6 +955,7 @@ goodsEditPanel.add(a);
                 else if(mode==2) {
                     Main.deleteGoods(a);
                     initGoods(frame);
+                    new Message("Done");
                 }
 
             }
@@ -1117,6 +1122,7 @@ goodsEditPanel.add(a);
 
                     try {
                         Main.editGoods(a, ab, n, d, pr, q, p);
+                        new Message("Done");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -1212,6 +1218,7 @@ goodsEditPanel.add(a);
                     int q = (int) quantity.getValue();
                     double p = (double) price.getValue();
                     Main.addGoods(new Goods(a, nameText.getText(), descrText.getText(), prodText.getText(), q, p));
+                    new Message("Done");
                     goodsAddPanel.setVisible(false);
                     remove(goodsAddPanel);
                     initGoods(frame);
