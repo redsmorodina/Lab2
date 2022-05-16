@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Main {
 
@@ -217,7 +218,7 @@ public class Main {
     public static ArrayList<Goods> findGoodsByName(String name){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
-            if(good.getName().contains(name)) result.add(good);
+            if(good.getName().toLowerCase().contains(name.toLowerCase())) result.add(good);
         }
         return result;
     }
@@ -230,7 +231,7 @@ public class Main {
     public static ArrayList<Goods> findGoodsByProducer(String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
-            if(good.getProducer().contains(producer)) result.add(good);
+            if(good.getProducer().toLowerCase().contains(producer.toLowerCase())) result.add(good);
         }
         return result;
     }
@@ -244,7 +245,7 @@ public class Main {
     public static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
-            if(good.getName().contains(name)&&good.getProducer().contains(producer)) result.add(good);
+            if(good.getName().toLowerCase().contains(name.toLowerCase())&&good.getProducer().toLowerCase().contains(producer.toLowerCase())) result.add(good);
         }
         return result;
     }
