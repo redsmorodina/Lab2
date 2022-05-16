@@ -121,7 +121,7 @@ public class MenuForm extends JFrame {
                     String path=file.getAbsolutePath().replaceAll("\\\\","?;");
                     path=path.replaceAll("\\?;", "\\\\\\\\");
                     Main.exportToFiles(path);
-                    new Message("Information was exported on a disk D.");
+                    new Message("Information was exported to "+file.getAbsolutePath());
                 }else{
                    new Error("Open command canceled.");
                 }

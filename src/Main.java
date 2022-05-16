@@ -8,7 +8,7 @@ public class Main {
     static ArrayList<Goods> goodsArrayList;
     static ArrayList<Group> groupArrayList;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         goodsArrayList = new ArrayList<>();
         groupArrayList = new ArrayList<>();
         groupArrayList.add(new Group("Cereals", "A cereal is any grass cultivated for the edible components of its grain", new ArrayList<>()));
@@ -33,7 +33,6 @@ public class Main {
     public static void addGoods(Goods goods) {
         goodsArrayList.add(goods);
         groupArrayList.get(groupArrayList.indexOf(goods.getGroup())).getGoods().add(goods);
-//STRING VALUE OF
     }
 
     /**
@@ -204,7 +203,7 @@ public class Main {
     private static double countPriceGroup(Group group) {
         double answ = 0;
         for (int i = 0; i < groupArrayList.get(groupArrayList.indexOf(group)).getGoods().size(); i++) {
-            Goods a = (Goods) groupArrayList.get(groupArrayList.indexOf(group)).getGoods().get(i);
+            Goods a = groupArrayList.get(groupArrayList.indexOf(group)).getGoods().get(i);
             answ = answ + a.getPrice() * a.getQuantity();
         }
         return answ;
