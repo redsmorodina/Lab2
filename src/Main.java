@@ -47,25 +47,6 @@ public class Main {
     }
 
     /**
-     * we will make a new goods
-     * @return new Goods
-     * @throws IOException
-     */
-    private static Goods makeNewGoods() throws IOException {
-        Group group = chooseAGroup();
-        String name = DataInput.getString("Name:");
-        while (!checkTheNameOnUnique(1, name)) {
-            name = DataInput.getString("Name:");
-        }
-        String describtion = DataInput.getString("Description");
-        String producer = DataInput.getString("Producer");
-        int quantity = DataInput.getInt("Quantity");
-        double price = DataInput.getDouble("Price");
-        return new Goods(group, name, describtion, producer, quantity, price);
-    }
-
-
-    /**
      * we will chak the name on unique
      * @param k 0 - group, 1 - goods
      * @param name - name to check
@@ -88,21 +69,6 @@ public class Main {
             return true;
         }
         return false;
-    }
-
-    /**
-     * we will choose a group from given list
-     * @return - choosen group
-     */
-    private static Group chooseAGroup() {
-        if (groupArrayList.size() > 0) {
-            for (int i = 0; i < groupArrayList.size(); i++) {
-                System.out.println((i + 1) + " - " + groupArrayList.get(i));
-            }
-            int k = DataInput.getInt("Number");
-            return groupArrayList.get(k - 1);
-        }
-        return null;
     }
 
     /**
@@ -137,20 +103,6 @@ public class Main {
      */
     static void addGroup(Group group) {
         groupArrayList.add(group);
-    }
-
-    /**
-     * makes new group with chosen parameters
-     * @return created group
-     * @throws IOException if was entered an unappropriated type of info
-     */
-    private static Group makeNewGroup() throws IOException {
-        String name = DataInput.getString("Name:");
-        while (!checkTheNameOnUnique(0, name)) {
-            name = DataInput.getString("Name:");
-        }
-        String description = DataInput.getString("Description:");
-        return new Group(name, description, new ArrayList<Goods>());
     }
 
     /**
