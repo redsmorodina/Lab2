@@ -131,10 +131,19 @@ public class Main {
         goods.setName(name);
     }
 
+    /**
+     * method adds created group to groupArrayList
+     * @param group created group
+     */
     static void addGroup(Group group) {
         groupArrayList.add(group);
     }
 
+    /**
+     * makes new group with chosen parameters
+     * @return created group
+     * @throws IOException if was entered an unappropriated type of info
+     */
     private static Group makeNewGroup() throws IOException {
         String name = DataInput.getString("Name:");
         while (!checkTheNameOnUnique(0, name)) {
@@ -144,6 +153,10 @@ public class Main {
         return new Group(name, description, new ArrayList<Goods>());
     }
 
+    /**
+     * deletes group from arraylist and all goods of that group
+     * @param group chosen group
+     */
     static void removeGroup(Group group) {
        ArrayList <Goods> a = new ArrayList<>();
         for(int i=0; i<goodsArrayList.size(); i++){
@@ -155,10 +168,16 @@ public class Main {
         groupArrayList.remove(group);
     }
 
+    /**
+     * edits group due to new parameters
+     * @param group chosen group
+     * @param name new name
+     * @param des new description
+     * @throws IOException if was entered an unappropriated type of info
+     */
     static void editGroup(Group group, String name, String des) throws IOException {
         group.setName(name);
         group.setDescription(des);
-
     }
 
     /**
@@ -239,6 +258,11 @@ public class Main {
         return answ;
     }
 
+    /**
+     * searches goods by name (substring also)
+     * @param name written name
+     * @return arraylist with all goods with that params
+     */
     public static ArrayList<Goods> findGoodsByName(String name){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
@@ -247,6 +271,11 @@ public class Main {
         return result;
     }
 
+    /**
+     * searches goods by producer (substring also)
+     * @param producer written producer
+     * @return arraylist with all goods with that params
+     */
     public static ArrayList<Goods> findGoodsByProducer(String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
@@ -255,6 +284,12 @@ public class Main {
         return result;
     }
 
+    /**
+     * searches goods by name and producer (substring also)
+     * @param name written name
+     * @param producer written producer
+     * @return arraylist with all goods with that params
+     */
     public static ArrayList<Goods> findGoodsByNameAndProducer(String name,String producer){
         ArrayList<Goods> result = new ArrayList<>();
         for (Goods good:goodsArrayList) {
@@ -263,15 +298,17 @@ public class Main {
         return result;
     }
 
-    public static void exportToFiles() {
+    /**
+     * exports files to destination of String folder
+     */
+    public static void exportToFiles(String path) {
         try {
-            File groupObj = new File("D:\\all groups.txt");
-            //File groupObj = new File("C:\\vbn\\all groups.txt");
+            if(path.charAt(path.length()-1)!='\\') path+="\\\\";
+            File groupObj = new File(path+"all groups.txt");
             FileWriter writerGroup = new FileWriter(groupObj.getAbsolutePath());
             for (Group group : groupArrayList) {
-                writerGroup.write(group.getName() + "\n");
-                File goodObj = new File("D:\\" + group.getName() + ".txt");
-               // File goodObj = new File("C:\\vbn\\" + group.getName() + ".txt");
+                writerGroup.write(group.getName()+" - "+group.getDescription() + "\n");
+                File goodObj = new File(path + group.getName() + ".txt");
                 FileWriter writerGoods = new FileWriter(goodObj.getAbsolutePath());
                 for (Goods good : group.getGoods()) {
                     writerGoods.write(good + "\n");

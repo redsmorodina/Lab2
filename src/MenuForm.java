@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -112,13 +113,27 @@ public class MenuForm extends JFrame {
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.exportToFiles();
-                new Message("Information was exported on a disk D.");
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int option = fileChooser.showOpenDialog(frame);
+                if(option == JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    String path=file.getAbsolutePath().replaceAll("\\\\","?;");
+                    path=path.replaceAll("\\?;", "\\\\\\\\");
+                    Main.exportToFiles(path);
+                    new Message("Information was exported on a disk D.");
+                }else{
+                   new Error("Open command canceled.");
+                }
             }
         });
         mainPanel.add(fileButton);
     }
 
+    /**
+     * we create panel with supply page
+     * @param frame .
+     */
     private void initSupply(Frame frame) {
         frame.setSize(1000,800);
         JPanel supplyPanel = new JPanel(new GridLayout(8, 2));
@@ -238,6 +253,10 @@ public class MenuForm extends JFrame {
         supplyPanel.add(back);
     }
 
+    /**
+     * we create panel with find page
+     * @param frame .
+     */
     private void initFind(Frame frame) {
         JPanel findPanel = new JPanel(new GridLayout(5, 2));
         add(findPanel);
@@ -292,6 +311,10 @@ public class MenuForm extends JFrame {
         findPanel.add(back);
     }
 
+    /**
+     * we create panel with results of find page
+     * @param frame .
+     */
     private void initFindResults(Frame frame, ArrayList<Goods> found) {
         JPanel findResultsPanelMain = new JPanel(new GridLayout(4, 1));
         add(findResultsPanelMain);
@@ -558,7 +581,7 @@ goodsEditPanel.add(h);
 
 
     /**
-     * we will fing group to edit
+     * we will find group to edit
      * @param frame
      */
     private void initGroupEdit1(Frame frame) {
